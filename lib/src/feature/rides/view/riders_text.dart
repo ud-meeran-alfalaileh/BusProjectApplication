@@ -26,6 +26,18 @@ class RidersText {
     );
   }
 
+  static bigText(title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontFamily: 'Kanti',
+        fontSize: 30,
+        color: AppTheme.lightAppColors.mainTextcolor,
+        fontWeight: FontWeight.w300, // Use FontWeight.bold for the bold variant
+      ),
+    );
+  }
+
   static titlText(title) {
     return Text(
       title,
@@ -94,6 +106,18 @@ class RidersText {
         fontSize: 17,
         color: AppTheme.lightAppColors.black,
         fontWeight: FontWeight.w600, // Use FontWeight.bold for the bold variant
+      ),
+    );
+  }
+
+  static buttonText(title) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontFamily: 'Kanti',
+        fontSize: 15,
+        color: AppTheme.lightAppColors.background,
+        fontWeight: FontWeight.w500, // Use FontWeight.bold for the bold variant
       ),
     );
   }

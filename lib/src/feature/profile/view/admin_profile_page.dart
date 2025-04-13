@@ -2,10 +2,10 @@ import 'package:drive_app/src/config/sizes/size_box_extension.dart';
 import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/core/user.dart';
-import 'package:drive_app/src/feature/rides/view/add_rides_page.dart';
 import 'package:drive_app/src/feature/login/view/pages/login_page.dart';
 import 'package:drive_app/src/feature/profile/contorller/admin_profile_controller.dart';
 import 'package:drive_app/src/feature/profile/view/profile_text.dart';
+import 'package:drive_app/src/feature/rides/view/add_rides_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,7 +42,7 @@ class AdminProfilePage extends StatelessWidget {
                     padding: EdgeInsets.all(20),
                     width: context.screenWidth,
                     decoration: BoxDecoration(
-                        color: AppTheme.lightAppColors.bordercolor,
+                        color: AppTheme.lightAppColors.background,
                         boxShadow: [
                           BoxShadow(
                             color: AppTheme.lightAppColors.black

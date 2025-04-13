@@ -58,7 +58,9 @@ class LoginController extends GetxController {
         final jsonData = json.decode(response.data);
 
         final token = jsonData['id'];
+        final gender = jsonData['gender'];
         await user.saveId(token);
+        await user.saveUserGender(gender);
         user.userId.value = token;
 
         isLoading.value = false;

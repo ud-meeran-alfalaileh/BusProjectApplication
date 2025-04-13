@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:drive_app/src/core/api/api_services.dart';
 import 'package:drive_app/src/core/api/end_points.dart';
@@ -9,13 +10,26 @@ import 'package:drive_app/src/core/user.dart';
 import 'package:drive_app/src/feature/profile/model/admin_profile_model.dart';
 import 'package:drive_app/src/feature/rides/model/rides_model.dart';
 import 'package:get/get.dart';
+import 'package:http/io_client.dart';
 
 class RidesController extends GetxController {
+  HttpClient getHttpClient() {
+    final client = HttpClient()
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+    return client;
+  }
+
+  final DioConsumer dioConsumer = sl<DioConsumer>();
+
   RxBool isLoading = false.obs;
+  //admin
   RxList<RidesModel> rides = <RidesModel>[].obs;
+
+  //driver
   Rx<UserProfileModel?> driver = Rx<UserProfileModel?>(null);
   RxList<RidesModel> driverRides = <RidesModel>[].obs;
-  final DioConsumer dioConsumer = sl<DioConsumer>();
+
   User user = User();
   @override
   Future<void> onInit() async {
@@ -23,6 +37,7 @@ class RidesController extends GetxController {
     super.onInit();
   }
 
+  //admin
   Future<void> getAllRides() async {
     try {
       isLoading.value = true;
@@ -67,6 +82,40 @@ class RidesController extends GetxController {
     }
   }
 
+  Future<void> changeStatus(id, isLoadingStatus, index, status) async {
+    try {
+      isLoadingStatus.value = true;
+
+      var body = jsonEncode("$status"); // <-- This should probably be JSON
+
+      final ioClient = IOClient(getHttpClient());
+      final response = await ioClient.put(
+        Uri.parse("${EndPoints.rides}$id/UpdateRideStatus"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: body,
+      );
+
+      if (response.statusCode == StatusCode.ok) {
+        final responseData = jsonDecode(response.body);
+        log(responseData.toString());
+      } else {
+        isLoadingStatus.value = false;
+      }
+
+      driverRides[index].status = status;
+      driverRides.refresh();
+    } catch (e) {
+      log(e.toString());
+      isLoadingStatus.value = false;
+    } finally {
+      isLoadingStatus.value = false;
+    }
+  }
+
+  //driver
   Future<void> getRideForDrive() async {
     await user.loadId();
     try {
@@ -91,4 +140,11 @@ class RidesController extends GetxController {
       isLoading.value = false; // Set to false instead of true
     }
   }
+
+
+
+
+
+
+
 }

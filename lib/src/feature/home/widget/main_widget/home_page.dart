@@ -1,17 +1,14 @@
 import 'dart:developer' as dd;
-import 'dart:math';
 
 import 'package:drive_app/src/config/sizes/size_box_extension.dart';
 import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/core/utils/app_button.dart';
 import 'package:drive_app/src/feature/location/controller/location_controller.dart';
-import 'package:drive_app/src/feature/location/view/location_screen.dart';
+import 'package:drive_app/src/feature/rides/view/student_all_rides_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_places_flutter/model/prediction.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,7 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final LocationController controller = Get.put(LocationController());
+  final DashboardController controller = Get.put(DashboardController());
 
   @override
   void initState() {
@@ -62,37 +59,25 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       20.0.kH,
-                      SizedBox(
-                        width: context.screenWidth,
-                        height: context.screenHeight * .14,
-                        child: _buildForm(controller),
-                      ),
+                      buildForm(),
                       20.0.kH,
                       Row(
                         children: [
-                          _buildDatContainer("Today"),
+                          _buildDatContainer("Today".tr),
                           10.0.kW,
-                          _buildDatContainer("Tomorrow"),
+                          _buildDatContainer("Tomorrow".tr),
                           10.0.kW,
-                          _buildDatContainer("Other")
+                          _buildDatContainer("Other".tr)
                         ],
                       ),
                       20.0.kH,
                       appButton(
                           onTap: () {
-                            controller.end.value == null ||
-                                    controller.start.value == null
-                                ? {
-                                    Get.to(MapScreen(
-                                        controller: controller, type: "null"))
-                                  }
-                                : {
-                                    Get.to(MapScreen(
-                                        controller: controller,
-                                        type: "notNull"))
-                                  };
+                            Get.to(() => StudentAllRidesScreen(
+                                  dashboardController: controller,
+                                ));
                           },
-                          title: "Find Buses",
+                          title: "Find Buses".tr,
                           width: 200,
                           color: AppTheme.lightAppColors.primary)
                     ],
@@ -151,64 +136,68 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Stack _buildForm(LocationController controller) {
-    return Stack(
+  buildForm() {
+    return Column(
       children: [
-        Column(
-          children: [
-            buildSearchField(
-              controller: controller,
-              hint: 'Start Location',
-              testContrller: controller.startLocationController,
-              onSelect: (Prediction prediction) {
-                controller.polylines.clear(); // Clear the route
-                controller.routeCoords.clear(); // Clear the route coordinates
-                controller.start(null); // Clear the start point
-
-                controller.cameraMove(
-                  double.parse(prediction.lat ?? '0.0'),
-                  double.parse(prediction.lng ?? '0.0'),
-                  'start',
-                  'Start Location',
-                );
-                controller.start(LatLng(
-                  double.parse(prediction.lat ?? '0.0'),
-                  double.parse(prediction.lng ?? '0.0'),
-                ));
-              },
-            ),
-            Spacer(),
-            buildSearchField(
-              controller: controller,
-              hint: 'End Location',
-              testContrller: controller.endLocationController,
-              onSelect: (Prediction prediction) {
-                controller.polylines.clear(); // Clear the route
-                controller.routeCoords.clear(); // Clear the route coordinates
-                controller.end(null); // Clear the end point
-
-                controller.cameraMove(
-                  double.parse(prediction.lat ?? '0.0'),
-                  double.parse(prediction.lng ?? '0.0'),
-                  'end',
-                  'End Location',
-                );
-
-                controller.end(LatLng(
-                  double.parse(prediction.lat ?? '0.0'),
-                  double.parse(prediction.lng ?? '0.0'),
-                ));
-              },
-            ),
-          ],
-        ),
-        _builsSwitchButton()
+        Obx(() {
+          return DropdownButtonFormField<String>(
+            value: controller.fromLocation.value,
+            decoration: _buildDecoration("From Location".tr),
+            items: controller.firstList.map((location) {
+              return DropdownMenuItem<String>(
+                value: location,
+                child: Text(location),
+              );
+            }).toList(),
+            onChanged: controller.selectFirst,
+          );
+        }),
+        const SizedBox(height: 16),
+        Obx(() {
+          return DropdownButtonFormField<String>(
+            value: controller.toLocation.value,
+            decoration: _buildDecoration('To Location'.tr),
+            items: controller.secondList.map((location) {
+              return DropdownMenuItem<String>(
+                value: location,
+                child: Text(location),
+              );
+            }).toList(),
+            onChanged: controller.selectSecond,
+          );
+        }),
       ],
     );
   }
 
+  InputDecoration _buildDecoration(String hint) {
+    return InputDecoration(
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+      filled: true,
+      fillColor: AppTheme.lightAppColors.background.withValues(alpha: 0.9),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppTheme.lightAppColors.mainTextcolor.withValues(alpha: 0.1),
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(30)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: AppTheme.lightAppColors.mainTextcolor.withValues(alpha: 0.1),
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(30)),
+      ),
+      hintText: hint,
+      hintStyle: TextStyle(
+        fontFamily: "kanti",
+        fontWeight: FontWeight.w200,
+        color: AppTheme.lightAppColors.subTextcolor,
+      ),
+    );
+  }
+
   void showDatePickerDialog(
-      BuildContext contex, LocationController controller) {
+      BuildContext contex, DashboardController controller) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -246,32 +235,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Align _builsSwitchButton() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Obx(
-          () => CircleAvatar(
-            backgroundColor: AppTheme.lightAppColors.primary,
-            child: Transform.rotate(
-              angle: controller.isPickupLocation.value ? pi / 2.0 : pi / -2.0,
-              child: IconButton(
-                  color: AppTheme.lightAppColors.background,
-                  onPressed: () {
-                    String temp = controller.startLocationController.text;
-                    controller.startLocationController.text =
-                        controller.endLocationController.text;
-                    controller.endLocationController.text = temp;
+  // Align _builsSwitchButton() {
+  //   return Align(
+  //     alignment: Alignment.centerRight,
+  //     child: Padding(
+  //       padding: const EdgeInsets.all(8.0),
+  //       child: Obx(
+  //         () => CircleAvatar(
+  //           backgroundColor: AppTheme.lightAppColors.primary,
+  //           child: Transform.rotate(
+  //             angle: controller.isPickupLocation.value ? pi / 2.0 : pi / -2.0,
+  //             child: IconButton(
+  //                 color: AppTheme.lightAppColors.background,
+  //                 onPressed: () {
+  //                   String temp = controller.startLocationController.text;
+  //                   controller.startLocationController.text =
+  //                       controller.endLocationController.text;
+  //                   controller.endLocationController.text = temp;
 
-                    controller.isPickupLocation.value =
-                        !controller.isPickupLocation.value;
-                  },
-                  icon: Icon(Icons.switch_right_sharp)),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  //                   controller.isPickupLocation.value =
+  //                       !controller.isPickupLocation.value;
+  //                 },
+  //                 icon: Icon(Icons.switch_right_sharp)),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

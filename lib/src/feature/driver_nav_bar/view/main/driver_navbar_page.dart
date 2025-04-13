@@ -6,9 +6,8 @@ import 'package:drive_app/src/feature/driver_nav_bar/controller/driver_nav_bar_c
 import 'package:drive_app/src/feature/home/widget/main_widget/driver_home_page.dart';
 import 'package:drive_app/src/feature/nav_bar/view/main/custome_navbar.dart';
 import 'package:drive_app/src/feature/notification/controller/notification_controller.dart';
-import 'package:drive_app/src/feature/notification/view/widget/main_widget/favorit_notification.dart';
+import 'package:drive_app/src/feature/profile/view/driver_profile_page.dart';
 import 'package:drive_app/src/feature/rides/view/driver_all_rides.dart';
-import 'package:drive_app/src/feature/tickets/view/widget/ticket_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -58,7 +57,7 @@ class _DriverNavBarPageState extends State<DriverNavBarPage> {
                     return const DriverAllRides();
 
                   case 2:
-                    return const FavoritNotification();
+                    return const DriverProfilePage();
 
                   default:
                     return Scaffold(

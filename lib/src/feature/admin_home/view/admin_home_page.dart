@@ -1,10 +1,11 @@
 import 'package:drive_app/src/config/sizes/size_box_extension.dart';
 import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
-import 'package:drive_app/src/feature/rides/view/add_rides_page.dart';
-import 'package:drive_app/src/feature/rides/view/all_rides_screen.dart';
+import 'package:drive_app/src/feature/admin_statistics/view/admin_statistics_page.dart';
 import 'package:drive_app/src/feature/profile/contorller/admin_profile_controller.dart';
 import 'package:drive_app/src/feature/profile/view/admin_profile_page.dart';
+import 'package:drive_app/src/feature/rides/view/add_rides_page.dart';
+import 'package:drive_app/src/feature/rides/view/all_rides_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,13 +39,10 @@ class AdminHomePage extends StatelessWidget {
                             "assets/image/busIcon.png",
                             AppTheme.lightAppColors.primary,
                           ),
-                          _buildHomeButton(
-                            context,
-                            () {},
-                            "Statistics".tr,
-                            "assets/image/busIcon.png",
-                            AppTheme.lightAppColors.primary,
-                          ),
+                          _buildHomeButton(context, () {
+                            Get.to(() => AdminStatisticsPage());
+                          }, "Statistics".tr, "assets/image/pie-cart.png",
+                              null),
                           _buildHomeButton(context, () {
                             Get.to(() => AddRidesPage());
                           }, "Add Rides".tr, "assets/image/add-square-02.png",
@@ -55,15 +53,10 @@ class AdminHomePage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _buildHomeButton(
-                            context,
-                            () {
-                              Get.to(() => AdminProfilePage());
-                            },
-                            "Profile".tr,
-                            "assets/image/user.png",
-                            AppTheme.lightAppColors.primary,
-                          ),
+                          _buildHomeButton(context, () {
+                            Get.to(() => AdminProfilePage());
+                          }, "Profile".tr, "assets/image/user.png",
+                              Colors.blueAccent),
                         ],
                       )
                     ],
@@ -75,7 +68,7 @@ class AdminHomePage extends StatelessWidget {
   }
 
   GestureDetector _buildHomeButton(BuildContext context, VoidCallback onTap,
-      String title, String icon, color) {
+      String title, String icon, Color? color) {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(

@@ -5,6 +5,7 @@ class TicketText {
   static mainText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 15,
@@ -17,6 +18,7 @@ class TicketText {
   static secText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 14,
@@ -29,6 +31,7 @@ class TicketText {
   static timeText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 16,
@@ -41,6 +44,7 @@ class TicketText {
   static ttText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 16,
@@ -53,6 +57,7 @@ class TicketText {
   static durationText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 16,
@@ -65,6 +70,7 @@ class TicketText {
   static titlShowText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 16,
@@ -77,6 +83,7 @@ class TicketText {
   static descriptionShowTitle(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 13,
@@ -89,6 +96,7 @@ class TicketText {
   static notificationText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 17,
@@ -101,6 +109,7 @@ class TicketText {
   static chatText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 15,
@@ -113,6 +122,7 @@ class TicketText {
   static headerText(title) {
     return Text(
       title,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontFamily: 'Kanti',
         fontSize: 17,

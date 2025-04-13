@@ -32,6 +32,8 @@ class _MainAppPageState extends State<MainAppPage> {
 
   Future<void> initialState() async {
     await user.loadId();
+    await user.loadGender();
+    // await user.clearId();
     if (user.adminID.value != 0) {
       Get.offAll(AdminNavbarPage());
     }

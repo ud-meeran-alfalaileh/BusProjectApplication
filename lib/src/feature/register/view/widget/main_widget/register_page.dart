@@ -100,7 +100,6 @@ class RegisterPage extends StatelessWidget {
                                   pageTwo(controller, errorText, showPassword)
                                 ],
                                 onPageChanged: (value) {
-                                  print(value);
                                   index.value = value;
                                 },
                               ),
@@ -112,8 +111,8 @@ class RegisterPage extends StatelessWidget {
                                       errorText.value == 'valid'
                                           ? {
                                               pageController.nextPage(
-                                                  duration:
-                                                      Duration(milliseconds: 300),
+                                                  duration: Duration(
+                                                      milliseconds: 300),
                                                   curve: Curves.linear),
                                             }
                                           : null;
@@ -327,17 +326,17 @@ class _GenderDropdownState extends State<GenderDropdown> {
         prefixIcon:
             Icon(widget.icon, color: AppTheme.lightAppColors.subTextcolor),
         filled: true,
-        fillColor: AppTheme.lightAppColors.background.withOpacity(0.9),
+        fillColor: AppTheme.lightAppColors.background.withValues(alpha:  0.9),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppTheme.lightAppColors.mainTextcolor.withOpacity(0.1),
+            color: AppTheme.lightAppColors.mainTextcolor.withValues(alpha:  0.1),
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
         border: const OutlineInputBorder(),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppTheme.lightAppColors.mainTextcolor.withOpacity(0.1),
+            color: AppTheme.lightAppColors.mainTextcolor.withValues(alpha:  0.1),
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
@@ -402,17 +401,17 @@ class _MajorDropdownState extends State<MajorDropdown> {
         prefixIcon:
             Icon(widget.icon, color: AppTheme.lightAppColors.subTextcolor),
         filled: true,
-        fillColor: AppTheme.lightAppColors.background.withOpacity(0.9),
+        fillColor: AppTheme.lightAppColors.background.withValues(alpha:  0.9),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppTheme.lightAppColors.mainTextcolor.withOpacity(0.1),
+            color: AppTheme.lightAppColors.mainTextcolor.withValues(alpha:  0.1),
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),
         border: const OutlineInputBorder(),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: AppTheme.lightAppColors.mainTextcolor.withOpacity(0.1),
+            color: AppTheme.lightAppColors.mainTextcolor.withValues(alpha:  0.1),
           ),
           borderRadius: BorderRadius.all(Radius.circular(30)),
         ),

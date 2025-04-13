@@ -98,6 +98,12 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "fl_chart",
+      "rootUri": "file:///Users/meeranalfalaileh/.pub-cache/hosted/pub.dev/fl_chart-0.70.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/meeranalfalaileh/development/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -542,7 +548,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-04-09T14:43:27.130513Z",
+  "generated": "2025-04-10T02:04:38.430997Z",
   "generator": "pub",
   "generatorVersion": "3.6.2",
   "flutterRoot": "file:///Users/meeranalfalaileh/development/flutter",

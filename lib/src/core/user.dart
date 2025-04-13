@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
   final RxInt userId = 0.obs;
+  final RxString userGender = "".obs;
   final RxInt driverID = 0.obs;
   final RxInt adminID = 0.obs;
 
@@ -26,9 +27,27 @@ class User {
     userId.value = 0;
   }
 
+  saveUserGender(String gender) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('userGender', gender); // Save the passed id
+  }
+
+  loadGender() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    userGender.value = prefs.getString('userGender') ?? "";
+    log(userGender.value.toString() + "Gennder");
+  }
+
+  clearDriverUserGender() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('userGender');
+    userGender.value = '';
+  }
+
   loadId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     userId.value = prefs.getInt('LoginId') ?? 0;
+    userGender.value = prefs.getString('userGender') ?? "";
     driverID.value = prefs.getInt('loginDriver') ?? 0;
     adminID.value = prefs.getInt('loginAdmin') ?? 0;
     log(userId.value.toString());

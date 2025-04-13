@@ -91,7 +91,6 @@ class _NotificationPageState extends State<NotificationPage> {
           alignment: Alignment.centerRight,
           child: GestureDetector(
             onTap: () {
-              print(controller.notification[index].timeSent);
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -174,10 +173,7 @@ class _NotificationPageState extends State<NotificationPage> {
                             isFav.value = !isFav.value;
                             await controller.putNotification(
                                 controller.notification[index].id, isFav.value);
-                            print(isFav.value);
-                            print(
-                              controller.notification[index].id,
-                            );
+                         
                             isLoadingFav.value = false;
                           },
                           child: Image.asset(

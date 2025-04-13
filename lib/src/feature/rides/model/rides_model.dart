@@ -9,7 +9,7 @@ class RidesModel {
   final String source;
   final String destination;
   final int busDriverId;
-  final String status;
+    String status;
   final String gender;
   final int adminId;
   final int busNumber;

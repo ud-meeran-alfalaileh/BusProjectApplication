@@ -21,7 +21,7 @@ class AllRidesScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              buildHeader(context, "All Rides"),
+              buildHeader(context, "All Rides".tr),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Obx(
@@ -128,7 +128,7 @@ class AllRidesScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(ride.status == "Pending" ? "waiting".tr : "accepted"),
+              Text(ride.status == "Pending" ? "waiting".tr : "Accepted".tr),
             ],
           ),
         ],
