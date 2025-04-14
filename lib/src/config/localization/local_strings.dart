@@ -105,8 +105,21 @@ class LocalStrings extends Translations {
           'Selected Seat': 'Selected Seat',
           'No seat selected': 'No seat selected',
           "You don’t have a ticket.": "You don’t have a ticket.",
+
+          ///
+          'No Rides for today': 'No Rides for today',
+          'No Rides for you': 'No Rides for you',
+
+          ///
+          'Sign In as Admin': 'Sign In as Admin',
+          'Sign In as Driver': 'Sign In as Driver',
         },
         'ar_JO': {
+                    'No Rides for you':'لا توجد رحلات',
+
+          'No Rides for today': 'لا توجد رحلات اليوم',
+          'Sign In as Admin': 'تسجيل الدخول كمسؤول',
+          'Sign In as Driver': 'تسجيل الدخول كسائق',
           "You don’t have a ticket.": "لم يتم العثور على تذكرة لك.",
           "Tickets": "التذاكر",
           "Book": "احجز",

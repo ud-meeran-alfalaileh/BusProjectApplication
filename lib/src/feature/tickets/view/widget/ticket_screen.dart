@@ -21,6 +21,7 @@ class _TicketScreenState extends State<TicketScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.allBookedRide.clear();
       controller.getUserBooking();
     });
     super.initState();
@@ -36,7 +37,7 @@ class _TicketScreenState extends State<TicketScreen> {
             _buildHeader(context),
             20.0.kH,
             Obx(
-              () => controller.isLoading.value
+              () => controller.isLoadingTickert.value
                   ? CircularProgressIndicator()
                   : controller.allBookedRide.isEmpty
                       ? Column(
@@ -85,7 +86,6 @@ class _TicketScreenState extends State<TicketScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(ride.id.toString()),
               CircleAvatar(
                   radius: 26,
                   backgroundColor: AppTheme.lightAppColors.background,

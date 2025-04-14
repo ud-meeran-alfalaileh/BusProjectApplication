@@ -11,6 +11,8 @@ import 'package:drive_app/src/feature/rides/view/riders_text.dart';
 import 'package:drive_app/src/feature/tickets/view/widget/ticket_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class StudentAllRidesScreen extends StatelessWidget {
   const StudentAllRidesScreen({super.key, required this.dashboardController});
@@ -36,63 +38,74 @@ class StudentAllRidesScreen extends StatelessWidget {
                 child: Obx(
                   () => controller.isLoading.value
                       ? Center(child: CircularProgressIndicator())
-                      : Column(
-                          children: [
-                            controller.userRides.isEmpty
-                                ? SizedBox()
-                                : Row(
-                                    children: [
-                                      RidersText.titlShowText("matchSearch".tr),
-                                    ],
-                                  ),
-                            controller.userRides.isEmpty
-                                ? Column(
-                                    children: [
-                                      40.0.kH,
-                                      Center(
-                                        child: RidersText.descriptionShowTitle(
-                                            "No rides found.".tr),
-                                      ),
-                                      40.0.kH,
-                                    ],
-                                  )
-                                : ListView.separated(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    itemCount: controller.userRides.length,
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return 20.0.kH;
-                                    },
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      final ride = controller.userRides[index];
-                                      return _buildTripContainer(ride, index,
-                                          context, controller, "fromList");
-                                    },
-                                  ),
-                            Row(
+                      : controller.userRides.isEmpty &&
+                              controller.otherRides.isEmpty
+                          ? RidersText.titlShowText("No rides found.".tr)
+                          : Column(
                               children: [
-                                RidersText.titlShowText("otherRides".tr),
+                                controller.userRides.isEmpty
+                                    ? SizedBox()
+                                    : Row(
+                                        children: [
+                                          RidersText.titlShowText(
+                                              "matchSearch".tr),
+                                        ],
+                                      ),
+                                controller.userRides.isEmpty
+                                    ? Column(
+                                        children: [
+                                          40.0.kH,
+                                          Center(
+                                            child:
+                                                RidersText.descriptionShowTitle(
+                                                    "No rides found.".tr),
+                                          ),
+                                          40.0.kH,
+                                        ],
+                                      )
+                                    : ListView.separated(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: controller.userRides.length,
+                                        separatorBuilder:
+                                            (BuildContext context, int index) {
+                                          return 20.0.kH;
+                                        },
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          final ride =
+                                              controller.userRides[index];
+                                          return _buildTripContainer(
+                                              ride,
+                                              index,
+                                              context,
+                                              controller,
+                                              "fromList");
+                                        },
+                                      ),
+                                Row(
+                                  children: [
+                                    RidersText.titlShowText("otherRides".tr),
+                                  ],
+                                ),
+                                ListView.separated(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: controller.otherRides.length,
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return 20.0.kH;
+                                  },
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final ride = controller.otherRides[index];
+                                    return _buildTripContainer(ride, index,
+                                        context, controller, "other");
+                                  },
+                                ),
                               ],
                             ),
-                            ListView.separated(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: controller.otherRides.length,
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return 20.0.kH;
-                              },
-                              itemBuilder: (BuildContext context, int index) {
-                                final ride = controller.otherRides[index];
-                                return _buildTripContainer(
-                                    ride, index, context, controller, "other");
-                              },
-                            ),
-                          ],
-                        ),
                 ),
               ),
             ],
@@ -186,8 +199,23 @@ class StudentAllRidesScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         appButton(
-                            onTap: () {
-                              Get.to(SeatLocationScreen(rideId: ride.id,));
+                            onTap: () async {
+                              await controller.getUserBooking();
+                              final isEmpty = controller.allBookedRide
+                                  .firstWhereOrNull(
+                                      (book) => book.id == ride.id);
+                              if (isEmpty != null) {
+                                showTopSnackBar(
+                                  Overlay.of(context),
+                                  CustomSnackBar.error(
+                                    message: 'This Ride Already booked'.tr,
+                                  ),
+                                );
+                              } else {
+                                Get.to(SeatLocationScreen(
+                                  rideId: ride.id,
+                                ));
+                              }
                             },
                             title: "Book".tr,
                             width: context.screenWidth * .4,

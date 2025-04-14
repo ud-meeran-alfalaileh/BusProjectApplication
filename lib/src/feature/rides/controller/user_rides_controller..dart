@@ -24,6 +24,7 @@ class UserRidesController extends GetxController {
   final DioConsumer dioConsumer = sl<DioConsumer>();
 
   RxBool isLoading = false.obs;
+  RxBool isLoadingTickert = false.obs;
   //studen
   RxList<RidesModel> allBookedRide = <RidesModel>[].obs;
   RxList<BookModel> booking = <BookModel>[].obs;
@@ -39,7 +40,6 @@ class UserRidesController extends GetxController {
 
   Future<UserProfileModel?> getDriver(id) async {
     try {
-      isLoading.value = true;
       final response = await dioConsumer.get("${EndPoints.driver}$id");
       if (response.statusCode == StatusCode.ok) {
         final responseData = jsonDecode(response.data);
@@ -51,7 +51,6 @@ class UserRidesController extends GetxController {
       }
     } catch (e) {
       log(e.toString());
-      isLoading.value = true;
 
       return null;
     }
@@ -112,12 +111,12 @@ class UserRidesController extends GetxController {
             allRides[i] = allRides[i].copyWith(driver: driver);
           }
         }
-
         userRides.value = allRides.where((ride) {
           final matchesFrom = from!.isEmpty || ride.source == from;
           final matchesTo =
               toLocation!.isEmpty || ride.destination == toLocation;
           final matchStatus = ride.status.toLowerCase() == "accpted";
+
           final matchGender =
               ride.gender == genderAr || ride.gender == genderEn;
 
@@ -126,8 +125,8 @@ class UserRidesController extends GetxController {
 
         otherRides.value = allRides
             .where((ride) =>
-                (ride.status == "Accpted" && ride.gender == genderAr ||
-                    ride.gender == genderEn) &&
+                ride.status.toLowerCase() == "Accpted" &&
+                (ride.gender == genderAr || ride.gender == genderEn) &&
                 !userRides.any((uRide) => uRide.id == ride.id))
             .toList();
         return allRides;
@@ -144,7 +143,6 @@ class UserRidesController extends GetxController {
       {String? from, String? toLocation, DateTime? date}) async {
     try {
       await user.loadGender();
-      isLoading.value = true;
 
       final response = await dioConsumer.get(EndPoints.allRides);
 
@@ -163,15 +161,14 @@ class UserRidesController extends GetxController {
       }
     } catch (e) {
       log(e.toString());
-    } finally {
-      isLoading.value = false;
-    }
+    } finally {}
     return [];
   }
 
   Future<void> userAddBooking(
-      int rideId, String fromList,  ) async {
-
+    int rideId,
+    String fromList,
+  ) async {
     try {
       await user.loadId();
       var body = ({
@@ -181,45 +178,41 @@ class UserRidesController extends GetxController {
       });
       final response = await dioConsumer.post(EndPoints.addBooking, body: body);
       log(response.data);
-      if (response.statusCode == StatusCode.ok) {
-        final responseData = jsonDecode(response.data);
-        fromList == "other"
-            ? otherRides.firstWhere((ride) => ride.id == rideId).status =
-                "Booked"
-            : userRides.firstWhere((ride) => ride.id == rideId).status =
-                "Booked";
-        userRides.refresh();
-        otherRides.refresh();
-      }
-                    Get.off(NavBarPage());
-
+      if (response.statusCode == StatusCode.ok) {}
+      Get.off(NavBarPage());
     } catch (e) {
       log(e.toString());
-    } finally {
-    }
+    } finally {}
   }
 
   Future<void> getUserBooking() async {
-    isLoading.value = true;
     allBookedRide.clear();
+    await user.loadId();
+    isLoadingTickert.value = true;
     final allRides = await getAllRides();
 
     try {
       final response = await dioConsumer.get(EndPoints.allBooking);
-
+      log(response.data);
       if (response.statusCode == StatusCode.ok) {
         final responseData = jsonDecode(response.data);
         booking.value = BookModel.fromJsonList(responseData);
-        for (var ride in allRides) {
-          if (booking.any((book) => book.rideId == ride.id)) {
-            allBookedRide.add(ride);
+        if (booking.isNotEmpty) {
+          for (var ride in allRides) {
+            if (booking.any((book) =>
+                book.rideId == ride.id &&
+                book.studentId == user.userId.value)) {
+              if (!allBookedRide.any((r) => r.id == ride.id)) {
+                allBookedRide.add(ride);
+              }
+            }
           }
         }
       }
     } catch (e) {
       log(e.toString());
     } finally {
-      isLoading.value = false;
+      isLoadingTickert.value = false;
     }
   }
 
@@ -231,7 +224,7 @@ class UserRidesController extends GetxController {
       final response =
           await dioConsumer.delete("${EndPoints.booking}${book.id}");
       allBookedRide.removeWhere((ride) => ride.id == id);
-      allBookedRide.refresh();
+      // allBookedRide.refresh();
       log(response.toString());
     } catch (e) {
       log(e.toString());

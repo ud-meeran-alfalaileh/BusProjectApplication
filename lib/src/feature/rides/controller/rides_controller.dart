@@ -125,9 +125,11 @@ class RidesController extends GetxController {
       log(response.data);
       if (response.statusCode == StatusCode.ok) {
         final responseData = jsonDecode(response.data);
-        driverRides.value =
+        final ride =
             RidesModel.fromJsonList(responseData); // Assign rides first.value =
-
+        driverRides.value = ride
+            .where((ride) => ride.status.toLowerCase() == "pending")
+            .toList();
         driver.value = await getDriver(user.driverID.value);
         for (var i = 0; i < driverRides.length; i++) {
           driverRides[i] = driverRides[i]
@@ -140,11 +142,4 @@ class RidesController extends GetxController {
       isLoading.value = false; // Set to false instead of true
     }
   }
-
-
-
-
-
-
-
 }

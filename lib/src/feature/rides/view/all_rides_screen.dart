@@ -128,7 +128,7 @@ class AllRidesScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(ride.status == "Pending" ? "waiting".tr : "Accepted".tr),
+              Text(ride.status == "Pending" ? "waiting".tr : ride.status.tr),
             ],
           ),
         ],

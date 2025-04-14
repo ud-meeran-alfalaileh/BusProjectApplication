@@ -48,190 +48,198 @@ class _LoginWidgetState extends State<LoginWidget> {
     return Obx(
       () => controller.isLoading.value
           ? loadingPage(context)
-          : Column(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                        width: context.screenWidth,
-                        decoration: BoxDecoration(
-                            color: AppTheme.lightAppColors.background,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Form(
-                          key: fromKey,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                      width: context.screenWidth,
-                                      height: context.screenHeight * .3,
-                                      color: AppTheme.lightAppColors.primary,
-                                      child: Image.asset(
-                                        'assets/image/logo (2).png',
-                                        width: context.screenWidth * .3,
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                          width: context.screenWidth,
+                          decoration: BoxDecoration(
+                              color: AppTheme.lightAppColors.background,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Form(
+                            key: fromKey,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    children: [
+                                      Container(
+                                        width: context.screenWidth,
+                                        height: context.screenHeight * .3,
+                                        color: AppTheme.lightAppColors.primary,
+                                        child: Image.asset(
+                                          'assets/image/logo (2).png',
+                                          width: context.screenWidth * .3,
+                                        ),
                                       ),
-                                    ),
-                                    10.0.kH,
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 25),
-                                      child: Column(
-                                        children: [
-                                          30.0.kH,
+                                      10.0.kH,
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 25),
+                                        child: Column(
+                                          children: [
+                                            30.0.kH,
 
-                                          LoginText.mainText('Sign In'.tr),
-                                          30.0.kH,
-                                          Obx(() {
-                                            return errorText.value != "valid"
-                                                ? Row(
-                                                    children: [
-                                                      Text(
-                                                        errorText.value,
-                                                        style: const TextStyle(
-                                                            color: Colors.red,
-                                                            fontSize: 14.0),
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                      ),
-                                                    ],
-                                                  )
-                                                : const SizedBox
-                                                    .shrink(); // If no errors, display nothing
-                                          }),
-                                          AuthForm(
-                                            formModel: FormModel(
-                                                icon: Icons.person_2_outlined,
-                                                controller:
-                                                    controller.studentId,
-                                                enableText: false,
-                                                hintText: 'Student Id'.tr,
-                                                invisible: false,
-                                                validator: null,
-                                                type: TextInputType.number,
-                                                inputFormat: [],
-                                                onTap: () {}),
-                                          ),
-                                          (30.5).kH,
-                                          //password
-                                          Stack(
-                                            children: [
-                                              AuthForm(
-                                                formModel: FormModel(
-                                                    icon: Icons.lock_outline,
-                                                    controller:
-                                                        controller.password,
-                                                    enableText: false,
-                                                    hintText:
-                                                        'loginPassword'.tr,
-                                                    invisible:
-                                                        showPassword.value,
-                                                    validator: null,
-                                                    type: TextInputType.text,
-                                                    inputFormat: [],
-                                                    onTap: () {}),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        showPassword.value =
-                                                            !showPassword.value;
-                                                      },
-                                                      icon: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                top: 10,
-                                                                right: 20),
-                                                        child: Icon(
-                                                          !showPassword.value
-                                                              ? Icons
-                                                                  .remove_red_eye_outlined
-                                                              : Icons
-                                                                  .remove_red_eye,
-                                                          color: AppTheme
-                                                              .lightAppColors
-                                                              .primary,
+                                            LoginText.mainText('Sign In'.tr),
+                                            30.0.kH,
+                                            Obx(() {
+                                              return errorText.value != "valid"
+                                                  ? Row(
+                                                      children: [
+                                                        Text(
+                                                          errorText.value,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontSize:
+                                                                      14.0),
+                                                          textAlign:
+                                                              TextAlign.start,
                                                         ),
-                                                      )),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                          50.0.kH,
-                                          appButton(
-                                              title: "Login".tr,
-                                              onTap: () {
-                                                errorText.value =
-                                                    validateAllFields()!;
-                                                errorText.value == 'valid'
-                                                    ? controller.login(context)
-                                                    : null;
-                                              },
-                                              width: context.screenWidth * .4),
-                                          10.0.kH,
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Container(
-                                    height: context.screenHeight * .03,
-                                    width: context.screenWidth,
-                                    decoration: BoxDecoration(
-                                        color:
-                                            AppTheme.lightAppColors.background,
-                                        borderRadius:
-                                            const BorderRadius.vertical(
-                                                top: Radius.circular(30))),
-                                    child: Center(
-                                      child: LoginText.haveAccount(() {
-                                        Get.to(() => const RegisterPage());
-                                      }),
-                                    )),
-                              ],
+                                                      ],
+                                                    )
+                                                  : const SizedBox
+                                                      .shrink(); // If no errors, display nothing
+                                            }),
+                                            AuthForm(
+                                              formModel: FormModel(
+                                                  icon: Icons.person_2_outlined,
+                                                  controller:
+                                                      controller.studentId,
+                                                  enableText: false,
+                                                  hintText: 'Student Id'.tr,
+                                                  invisible: false,
+                                                  validator: null,
+                                                  type: TextInputType.number,
+                                                  inputFormat: [],
+                                                  onTap: () {}),
+                                            ),
+                                            (30.5).kH,
+                                            //password
+                                            Stack(
+                                              children: [
+                                                AuthForm(
+                                                  formModel: FormModel(
+                                                      icon: Icons.lock_outline,
+                                                      controller:
+                                                          controller.password,
+                                                      enableText: false,
+                                                      hintText:
+                                                          'loginPassword'.tr,
+                                                      invisible:
+                                                          showPassword.value,
+                                                      validator: null,
+                                                      type: TextInputType.text,
+                                                      inputFormat: [],
+                                                      onTap: () {}),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          showPassword.value =
+                                                              !showPassword
+                                                                  .value;
+                                                        },
+                                                        icon: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .only(
+                                                                  top: 10,
+                                                                  right: 20),
+                                                          child: Icon(
+                                                            !showPassword.value
+                                                                ? Icons
+                                                                    .remove_red_eye_outlined
+                                                                : Icons
+                                                                    .remove_red_eye,
+                                                            color: AppTheme
+                                                                .lightAppColors
+                                                                .primary,
+                                                          ),
+                                                        )),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            50.0.kH,
+                                            appButton(
+                                                title: "Login".tr,
+                                                onTap: () {
+                                                  errorText.value =
+                                                      validateAllFields()!;
+                                                  errorText.value == 'valid'
+                                                      ? controller
+                                                          .login(context)
+                                                      : null;
+                                                },
+                                                width:
+                                                    context.screenWidth * .4),
+                                            10.0.kH,
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Container(
+                                      height: context.screenHeight * .03,
+                                      width: context.screenWidth,
+                                      decoration: BoxDecoration(
+                                          color: AppTheme
+                                              .lightAppColors.background,
+                                          borderRadius:
+                                              const BorderRadius.vertical(
+                                                  top: Radius.circular(30))),
+                                      child: Center(
+                                        child: LoginText.haveAccount(() {
+                                          Get.to(() => const RegisterPage());
+                                        }),
+                                      )),
+                                ],
+                              ),
                             ),
-                          ),
-                        ))
-                  ],
-                ),
-                (context.screenHeight * .08).kH,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: context.screenWidth * .42,
-                      height: 1,
-                      color: AppTheme.lightAppColors.containercolor,
-                    ),
-                    LoginText.secText("Or".tr),
-                    Container(
-                      width: context.screenWidth * .422,
-                      height: 1,
-                      color: AppTheme.lightAppColors.containercolor,
-                    ),
-                  ],
-                ),
-                20.0.kH,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    loginTypeLogin(context, "Driver".tr, () {
-                      Get.to(DriverLoginWidget());
-                    }),
-                    20.0.kW,
-                    loginTypeLogin(context, "Admin", () {
-                      Get.to(AdminLoginWidget());
-                    }),
-                  ],
-                )
-              ],
+                          ))
+                    ],
+                  ),
+                  (context.screenHeight * .08).kH,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: context.screenWidth * .42,
+                        height: 1,
+                        color: AppTheme.lightAppColors.containercolor,
+                      ),
+                      LoginText.secText("Or".tr),
+                      Container(
+                        width: context.screenWidth * .422,
+                        height: 1,
+                        color: AppTheme.lightAppColors.containercolor,
+                      ),
+                    ],
+                  ),
+                  20.0.kH,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      loginTypeLogin(context, "Driver".tr, () {
+                        Get.to(DriverLoginWidget());
+                      }),
+                      20.0.kW,
+                      loginTypeLogin(context, "Admin".tr, () {
+                        Get.to(AdminLoginWidget());
+                      }),
+                    ],
+                  )
+                ],
+              ),
             ),
     );
   }

@@ -80,19 +80,21 @@ class DriverHomePage extends StatelessWidget {
                         ? Center(
                             child: CircularProgressIndicator(),
                           )
-                        : ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: controller.todayRides.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return 10.0.kH;
-                            },
-                            itemBuilder: (BuildContext context, int index) {
-                              return _buildTodayContainer(
-                                  controller, index, context);
-                            },
-                          ),
+                        : controller.todayRides.isEmpty
+                            ? Text('No Rides for today'.tr)
+                            : ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: controller.todayRides.length,
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return 10.0.kH;
+                                },
+                                itemBuilder: (BuildContext context, int index) {
+                                  return _buildTodayContainer(
+                                      controller, index, context);
+                                },
+                              ),
                   ),
                 ),
                 50.0.kH,

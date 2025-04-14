@@ -45,160 +45,154 @@ class _LoginWidgetState extends State<AdminLoginWidget> {
     return Scaffold(
       backgroundColor: AppTheme.lightAppColors.background,
       body: Obx(
-        () => Column(
+        () => Stack(
           children: [
-            Stack(
-              children: [
-                Form(
-                  key: fromKey,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+            Form(
+              key: fromKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
                       children: [
-                        Column(
-                          children: [
-                            Container(
-                              width: context.screenWidth,
-                              height: context.screenHeight * .3,
-                              color: AppTheme.lightAppColors.primary,
-                              child: Image.asset(
-                                'assets/image/logo (2).png',
-                                width: context.screenWidth * .3,
-                              ),
-                            ),
-                            10.0.kH,
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 25),
-                              child: Column(
-                                children: [
-                                  30.0.kH,
+                        Container(
+                          width: context.screenWidth,
+                          height: context.screenHeight * .3,
+                          color: AppTheme.lightAppColors.primary,
+                          child: Image.asset(
+                            'assets/image/logo (2).png',
+                            width: context.screenWidth * .3,
+                          ),
+                        ),
+                        10.0.kH,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 25),
+                          child: Column(
+                            children: [
+                              30.0.kH,
 
-                                  LoginText.mainText('Sign In as Admin'),
-                                  30.0.kH,
-                                  Obx(() {
-                                    return errorText.value != "valid"
-                                        ? Row(
-                                            children: [
-                                              Text(
-                                                errorText.value,
-                                                style: const TextStyle(
-                                                    color: Colors.red,
-                                                    fontSize: 14.0),
-                                                textAlign: TextAlign.start,
-                                              ),
-                                            ],
-                                          )
-                                        : const SizedBox
-                                            .shrink(); // If no errors, display nothing
-                                  }),
+                              LoginText.mainText('Sign In as Admin'.tr),
+                              30.0.kH,
+                              Obx(() {
+                                return errorText.value != "valid"
+                                    ? Row(
+                                        children: [
+                                          Text(
+                                            errorText.value,
+                                            style: const TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 14.0),
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        ],
+                                      )
+                                    : const SizedBox
+                                        .shrink(); // If no errors, display nothing
+                              }),
+                              AuthForm(
+                                formModel: FormModel(
+                                    icon: Icons.person_2_outlined,
+                                    controller: controller.email,
+                                    enableText: false,
+                                    hintText: 'Email'.tr,
+                                    invisible: false,
+                                    validator: null,
+                                    type: TextInputType.number,
+                                    inputFormat: [],
+                                    onTap: () {}),
+                              ),
+                              (30.5).kH,
+                              //password
+                              Stack(
+                                children: [
                                   AuthForm(
                                     formModel: FormModel(
-                                        icon: Icons.person_2_outlined,
-                                        controller: controller.email,
+                                        icon: Icons.lock_outline,
+                                        controller: controller.password,
                                         enableText: false,
-                                        hintText: 'Email',
-                                        invisible: false,
+                                        hintText: 'loginPassword'.tr,
+                                        invisible: showPassword.value,
                                         validator: null,
-                                        type: TextInputType.number,
+                                        type: TextInputType.text,
                                         inputFormat: [],
                                         onTap: () {}),
                                   ),
-                                  (30.5).kH,
-                                  //password
-                                  Stack(
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      AuthForm(
-                                        formModel: FormModel(
-                                            icon: Icons.lock_outline,
-                                            controller: controller.password,
-                                            enableText: false,
-                                            hintText: 'Password',
-                                            invisible: showPassword.value,
-                                            validator: null,
-                                            type: TextInputType.text,
-                                            inputFormat: [],
-                                            onTap: () {}),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          IconButton(
-                                              onPressed: () {
-                                                showPassword.value =
-                                                    !showPassword.value;
-                                              },
-                                              icon: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10, right: 20),
-                                                child: Icon(
-                                                  !showPassword.value
-                                                      ? Icons
-                                                          .remove_red_eye_outlined
-                                                      : Icons.remove_red_eye,
-                                                  color: AppTheme
-                                                      .lightAppColors.primary,
-                                                ),
-                                              )),
-                                        ],
-                                      )
+                                      IconButton(
+                                          onPressed: () {
+                                            showPassword.value =
+                                                !showPassword.value;
+                                          },
+                                          icon: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, right: 20),
+                                            child: Icon(
+                                              !showPassword.value
+                                                  ? Icons
+                                                      .remove_red_eye_outlined
+                                                  : Icons.remove_red_eye,
+                                              color: AppTheme
+                                                  .lightAppColors.primary,
+                                            ),
+                                          )),
                                     ],
-                                  ),
-                                  50.0.kH,
-                                  appButton(
-                                      title: "Login",
-                                      onTap: () {
-                                        errorText.value = validateAllFields()!;
-                                        errorText.value == 'valid'
-                                            ? controller.login(context)
-                                            : null;
-                                      },
-                                      width: context.screenWidth * .4),
-                                  10.0.kH,
+                                  )
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                        // Container(
-                        //     height: context.screenHeight * .03,
-                        //     width: context.screenWidth,
-                        //     decoration: BoxDecoration(
-                        //         color: AppTheme.lightAppColors.background,
-                        //         borderRadius: const BorderRadius.vertical(
-                        //             top: Radius.circular(30))),
-                        //     child: Center(
-                        //       child: LoginText.haveAccount(() {
-                        //         Get.to(() => const RegisterPage());
-                        //       }),
-                        //     )),
+                              50.0.kH,
+                              appButton(
+                                  title: "Login".tr,
+                                  onTap: () {
+                                    errorText.value = validateAllFields()!;
+                                    errorText.value == 'valid'
+                                        ? controller.login(context)
+                                        : null;
+                                  },
+                                  width: context.screenWidth * .4),
+                              10.0.kH,
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  ),
+                    // Container(
+                    //     height: context.screenHeight * .03,
+                    //     width: context.screenWidth,
+                    //     decoration: BoxDecoration(
+                    //         color: AppTheme.lightAppColors.background,
+                    //         borderRadius: const BorderRadius.vertical(
+                    //             top: Radius.circular(30))),
+                    //     child: Center(
+                    //       child: LoginText.haveAccount(() {
+                    //         Get.to(() => const RegisterPage());
+                    //       }),
+                    //     )),
+                  ],
                 ),
-                controller.isLoading.value
-                    ? loadingPage(context)
-                    : const SizedBox.shrink(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 60),
-                  child: Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            color: AppTheme.lightAppColors.background,
-                          ))
-                    ],
-                  ),
-                )
-              ],
+              ),
             ),
+            controller.isLoading.value
+                ? loadingPage(context)
+                : const SizedBox.shrink(),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 60),
+              child: Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: AppTheme.lightAppColors.background,
+                      ))
+                ],
+              ),
+            )
           ],
         ),
       ),

@@ -76,7 +76,7 @@ class _LoginWidgetState extends State<DriverLoginWidget> {
                                   children: [
                                     30.0.kH,
 
-                                    LoginText.mainText('Sign In as Driver'),
+                                    LoginText.mainText('Sign In as Driver'.tr),
                                     30.0.kH,
                                     Obx(() {
                                       return errorText.value != "valid"
@@ -99,7 +99,7 @@ class _LoginWidgetState extends State<DriverLoginWidget> {
                                           icon: Icons.person_2_outlined,
                                           controller: controller.email,
                                           enableText: false,
-                                          hintText: 'Email',
+                                          hintText: 'Email'.tr,
                                           invisible: false,
                                           validator: null,
                                           type: TextInputType.number,
@@ -115,7 +115,7 @@ class _LoginWidgetState extends State<DriverLoginWidget> {
                                               icon: Icons.lock_outline,
                                               controller: controller.password,
                                               enableText: false,
-                                              hintText: 'Password',
+                                              hintText: 'loginPassword'.tr,
                                               invisible: showPassword.value,
                                               validator: null,
                                               type: TextInputType.text,
@@ -150,7 +150,7 @@ class _LoginWidgetState extends State<DriverLoginWidget> {
                                     ),
                                     50.0.kH,
                                     appButton(
-                                        title: "Login",
+                                        title: "Login".tr,
                                         onTap: () {
                                           errorText.value =
                                               validateAllFields()!;

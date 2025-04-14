@@ -36,20 +36,23 @@ class _DriverAllRidesState extends State<DriverAllRides> {
                   child: Column(
                     children: [
                       buildHeader(context, "All Rides".tr),
-                      ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: EdgeInsets.all(20),
-                        itemCount: rideController.driverRides.length,
-                        separatorBuilder: (BuildContext context, int index) {
-                          return 20.0.kH;
-                        },
-                        itemBuilder: (BuildContext context, int index) {
-                          final ride = rideController.driverRides[index];
-                          return buildTripContainer(
-                              ride, rideController, index, context);
-                        },
-                      ),
+                      rideController.driverRides.isEmpty
+                          ? Text('No Rides for you'.tr)
+                          : ListView.separated(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              padding: EdgeInsets.all(20),
+                              itemCount: rideController.driverRides.length,
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return 20.0.kH;
+                              },
+                              itemBuilder: (BuildContext context, int index) {
+                                final ride = rideController.driverRides[index];
+                                return buildTripContainer(
+                                    ride, rideController, index, context);
+                              },
+                            ),
                       100.0.kH,
                     ],
                   ),
