@@ -85,7 +85,7 @@ Container buildTripContainer(RidesModel ride, DriverRidesController controller,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RidersText.mainText(ride.driver?.name ?? "Loading..."),
+                RidersText.mainText(ride.name ?? "Loading..."),
                 Row(
                   children: [
                     Icon(
@@ -145,14 +145,14 @@ Container buildTripContainer(RidesModel ride, DriverRidesController controller,
                       ? statusButton(
                           onTap: () {
                             controller.changeStatus(
-                                ride.id, isLoadingStatus, index, "In Progress");
+                                ride.rideId, isLoadingStatus, index, "In Progress");
                           },
                           title: "Started".tr,
                           color: AppTheme.lightAppColors.primary)
                       : ride.status == "In Progress"
                           ? statusButton(
                               onTap: () {
-                                controller.changeStatus(ride.id,
+                                controller.changeStatus(ride.rideId,
                                     isLoadingStatus, index, "Completed");
                               },
                               title: "Completed".tr,

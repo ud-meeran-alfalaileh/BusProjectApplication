@@ -4,7 +4,7 @@ import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/core/utils/app_button.dart';
 import 'package:drive_app/src/feature/location/controller/location_controller.dart';
 import 'package:drive_app/src/feature/location/view/seet_screen.dart';
-import 'package:drive_app/src/feature/rides/controller/user_rides_controller..dart';
+import 'package:drive_app/src/feature/rides/controller/user_rides_controller.dart';
 import 'package:drive_app/src/feature/rides/model/rides_model.dart';
 import 'package:drive_app/src/feature/rides/view/add_rides_page.dart';
 import 'package:drive_app/src/feature/rides/view/riders_text.dart';
@@ -25,7 +25,6 @@ class StudentAllRidesScreen extends StatelessWidget {
         toLocation: dashboardController.toLocation.value ?? '',
         date: dashboardController.selectedDate.value,
       );
-    // ;
     return Scaffold(
       backgroundColor: AppTheme.lightAppColors.background,
       body: SafeArea(
@@ -138,7 +137,7 @@ class StudentAllRidesScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RidersText.mainText(ride.driver?.name ?? "Loading..."),
+                  RidersText.mainText(ride.name ?? "Loading..."),
                   Row(
                     children: [
                       Icon(
@@ -203,7 +202,7 @@ class StudentAllRidesScreen extends StatelessWidget {
                               await controller.getUserBooking();
                               final isEmpty = controller.allBookedRide
                                   .firstWhereOrNull(
-                                      (book) => book.id == ride.id);
+                                      (book) => book.ride.first == ride.rideId);
                               if (isEmpty != null) {
                                 showTopSnackBar(
                                   Overlay.of(context),

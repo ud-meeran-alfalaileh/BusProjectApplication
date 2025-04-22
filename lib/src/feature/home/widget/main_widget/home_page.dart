@@ -61,15 +61,15 @@ class _HomePageState extends State<HomePage> {
                       20.0.kH,
                       buildForm(),
                       20.0.kH,
-                      Row(
-                        children: [
-                          _buildDatContainer("Today".tr),
-                          10.0.kW,
-                          _buildDatContainer("Tomorrow".tr),
-                          10.0.kW,
-                          _buildDatContainer("Other".tr)
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     _buildDatContainer("Today".tr),
+                      //     10.0.kW,
+                      //     _buildDatContainer("Tomorrow".tr),
+                      //     10.0.kW,
+                      //     _buildDatContainer("Other".tr)
+                      //   ],
+                      // ),
                       20.0.kH,
                       appButton(
                           onTap: () {

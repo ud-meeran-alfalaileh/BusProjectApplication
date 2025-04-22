@@ -63,8 +63,8 @@ class _DriverAllRidesState extends State<DriverAllRides> {
   }
 }
 
-Container buildTripContainer(RidesModel ride, RidesController controller,
-    int index, BuildContext context) {
+Container buildTripContainer(RidesModel ride,
+    RidesController controller, int index, BuildContext context) {
   RxBool isLoadingStatus = false.obs;
 
   return Container(
@@ -87,7 +87,7 @@ Container buildTripContainer(RidesModel ride, RidesController controller,
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RidersText.mainText(ride.driver?.name ?? "Loading..."),
+                RidersText.mainText(ride?.name ?? "Loading..."),
                 Row(
                   children: [
                     Icon(
@@ -146,16 +146,16 @@ Container buildTripContainer(RidesModel ride, RidesController controller,
                     children: [
                       statusButton(
                           onTap: () {
-                            controller.changeStatus(
-                                ride.id, isLoadingStatus, index, "Accpted");
+                            controller.changeStatus(ride.rideId,
+                                isLoadingStatus, index, "Accpted");
                           },
                           title: "accept".tr,
                           color: AppTheme.lightAppColors.primary),
                       10.0.kW,
                       statusButton(
                           onTap: () {
-                            controller.changeStatus(
-                                ride.id, isLoadingStatus, index, "Rejected");
+                            controller.changeStatus(ride.rideId,
+                                isLoadingStatus, index, "Rejected");
                           },
                           title: "reject".tr,
                           color: Color(0xffEF9A9A))

@@ -2,7 +2,7 @@ import 'package:drive_app/src/config/sizes/size_box_extension.dart';
 import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/core/utils/loading_page.dart';
-import 'package:drive_app/src/feature/rides/controller/user_rides_controller..dart';
+import 'package:drive_app/src/feature/rides/controller/user_rides_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

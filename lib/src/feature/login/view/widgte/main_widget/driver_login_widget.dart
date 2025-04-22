@@ -102,13 +102,12 @@ class _LoginWidgetState extends State<DriverLoginWidget> {
                                           hintText: 'Email'.tr,
                                           invisible: false,
                                           validator: null,
-                                          type: TextInputType.number,
+                                          type: TextInputType.emailAddress,
                                           inputFormat: [],
                                           onTap: () {}),
                                     ),
                                     (30.5).kH,
-                                    //password
-                                    Stack(
+                                     Stack(
                                       children: [
                                         AuthForm(
                                           formModel: FormModel(

@@ -11,6 +11,7 @@ class EndPoints {
   static const String booking = '${baseUrl}Booking/';
   static const String rides = '${baseUrl}Ride/';
   static const String driverRides = '${baseUrl}Ride/busdriver/';
+  static const String driverRidesW = '${baseUrl}Ride/';
   static const String postRide = '${baseUrl}Ride/create';
   static const String allDriver = '${baseUrl}BusDriver/all';
   static const String driver = '${baseUrl}BusDriver/';

@@ -71,7 +71,7 @@ class AllRidesScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RidersText.mainText(ride.driver?.name ?? "Loading..."),
+                  RidersText.mainText(ride.name ?? "Loading..."),
                   Row(
                     children: [
                       Icon(
@@ -128,9 +128,24 @@ class AllRidesScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(ride.status == "Pending" ? "waiting".tr : ride.status.tr),
+              Text(ride.status == "Pending" ? "waiting".tr : ride.status),
             ],
           ),
+          if (ride.status == "Completed")
+            Column(
+              children: [
+                // Row(
+                //   children: [
+                //     Text("RatingList"),
+                //   ],
+                // ),
+                // Row(
+                //   children: [
+                //     Text("${"StudentId".tr}: $ride.user "),
+                //   ],
+                // ),
+              ],
+            )
         ],
       ),
     );

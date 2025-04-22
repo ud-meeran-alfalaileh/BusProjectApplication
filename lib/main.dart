@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      locale: const Locale('en', 'US'),
+      locale: const Locale('ar', 'US'),
       translations: LocalStrings(),
       title: 'Drive app',
       debugShowCheckedModeBanner: false,

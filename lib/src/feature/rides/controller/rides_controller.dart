@@ -48,12 +48,12 @@ class RidesController extends GetxController {
         rides.value =
             RidesModel.fromJsonList(responseData); // Assign rides first
 
-        for (var i = 0; i < rides.length; i++) {
-          final driver = await getDriver(rides[i].busDriverId);
-          if (driver != null) {
-            rides[i] = rides[i].copyWith(driver: driver); // Ensure immutability
-          }
-        }
+        // for (var i = 0; i < rides.length; i++) {
+        //   final driver = await getDriver(rides[i].busDriverId);
+        //   if (driver != null) {
+        //     rides[i] = rides[i].copyWith(driver: driver); // Ensure immutability
+        //   }
+        // }
       }
     } catch (e) {
       log(e.toString());
@@ -120,21 +120,17 @@ class RidesController extends GetxController {
     await user.loadId();
     try {
       isLoading.value = true;
+      log("dkdkdk");
       final response = await dioConsumer
-          .get("${EndPoints.driverRides}${user.driverID.value}/trips");
-      log(response.data);
+          .get("${EndPoints.driverRidesW}${user.driverID.value}/WithDriver");
+      log(response.data + "dkdkdk");
       if (response.statusCode == StatusCode.ok) {
         final responseData = jsonDecode(response.data);
-        final ride =
+        driverRides.value =
             RidesModel.fromJsonList(responseData); // Assign rides first.value =
-        driverRides.value = ride
-            .where((ride) => ride.status.toLowerCase() == "pending")
-            .toList();
-        driver.value = await getDriver(user.driverID.value);
-        for (var i = 0; i < driverRides.length; i++) {
-          driverRides[i] = driverRides[i]
-              .copyWith(driver: driver.value); // Ensure immutability
-        }
+        // driverRides.value = ride
+        //     .where((ride) => ride.ride.status.toLowerCase() == "pending")
+        //     .toList();
       }
     } catch (e) {
       log(e.toString());

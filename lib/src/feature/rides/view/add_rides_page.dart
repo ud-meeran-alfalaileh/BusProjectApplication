@@ -2,9 +2,9 @@ import 'package:drive_app/src/config/sizes/size_box_extension.dart';
 import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/core/utils/app_button.dart';
-import 'package:drive_app/src/feature/rides/controller/add_rides_controller.dart';
 import 'package:drive_app/src/feature/login/model/login_form_model.dart';
 import 'package:drive_app/src/feature/login/view/widgte/collection/auth_form_widget.dart';
+import 'package:drive_app/src/feature/rides/controller/add_rides_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -204,7 +204,15 @@ class _AddRidesPageState extends State<AddRidesPage> {
             }).toList(),
             onChanged: (String? newValue) {
               if (newValue != null) {
-                controller.setGender(newValue);
+                if (Get.locale!.languageCode == "ar") {
+                  newValue == "أنثى"
+                      ? controller.setGendertoAa("Female")
+                      : controller.setGendertoAa("Male");
+                  controller.setGender(newValue);
+                } else {
+                  controller.setGendertoAa(newValue);
+                  controller.setGender(newValue);
+                }
               }
             },
             decoration: InputDecoration(

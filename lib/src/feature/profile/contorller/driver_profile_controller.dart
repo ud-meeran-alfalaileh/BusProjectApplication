@@ -51,7 +51,7 @@ class DriverProfileController extends GetxController {
     try {
       await user.loadId();
       final response = await dioConsumer
-          .get("${EndPoints.driverRides}${user.driverID.value}/trips");
+          .get("${EndPoints.driverRidesW}${user.driverID.value}/WithDriver");
 
       if (response.statusCode == StatusCode.ok) {
         final responseData = jsonDecode(response.data);

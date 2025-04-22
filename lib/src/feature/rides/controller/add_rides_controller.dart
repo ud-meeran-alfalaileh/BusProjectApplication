@@ -30,6 +30,7 @@ class AddRidesController extends GetxController {
       DateFormat('yyyy-MM-dd'); // For date format: yyyy-MM-dd
   DateFormat timeFormat = DateFormat('HH:mm:ss'); // For time format: HH:mm:ss
   var selectedGender = RxnString(); // Reactive gender selection
+  var selectedGenderToApi = RxnString(); // Reactive gender selection
   var selectedStartLocation = RxnString(); // Reactive gender selection
   var selectedEndLocation = RxnString(); // Reactive gender selection
   var selectedStartTime = RxnString(); // Reactive gender selection
@@ -44,6 +45,11 @@ class AddRidesController extends GetxController {
 
   void setGender(String gender) {
     selectedGender.value = gender;
+  }
+
+  void setGendertoAa(String gender) {
+    selectedGenderToApi.value = gender;
+    log(gender);
   }
 
   List<String> locations = [
@@ -88,7 +94,7 @@ class AddRidesController extends GetxController {
       "source": selectedStartLocation.value,
       "destination": selectedEndLocation.value,
       "busDriverId": selectedDriver.value,
-      "gender": selectedGender.value,
+      "gender": selectedGenderToApi.value,
       "status": "Pending",
       "adminId": user.adminID.value,
       "busNumber": selectedDriver.value,

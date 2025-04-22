@@ -125,7 +125,7 @@ class DriverHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${"Ticket No.".tr}: #${controller.todayRides[index].id}"),
+          Text("${"Ticket No.".tr}: #${controller.todayRides[index].rideId}"),
           Divider(),
           IntrinsicHeight(
             child: Row(

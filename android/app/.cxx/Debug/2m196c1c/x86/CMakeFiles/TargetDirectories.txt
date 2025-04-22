@@ -1,0 +1,2 @@
+/Users/meeranalfalaileh/Desktop/GP2/BusProjectApplication/android/app/.cxx/Debug/2m196c1c/x86/CMakeFiles/edit_cache.dir
+/Users/meeranalfalaileh/Desktop/GP2/BusProjectApplication/android/app/.cxx/Debug/2m196c1c/x86/CMakeFiles/rebuild_cache.dir
