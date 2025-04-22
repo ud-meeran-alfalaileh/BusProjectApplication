@@ -206,10 +206,8 @@ class UserRidesController extends GetxController {
     isLoading.value = true;
 
     try {
-      BookModel book = booking.firstWhere((bb) => bb.rideId == id);
-      final response =
-          await dioConsumer.delete("${EndPoints.booking}${book.id}");
-      allBookedRide.removeWhere((ride) => ride.ride.first! == id);
+      final response = await dioConsumer.delete("${EndPoints.booking}$id");
+      allBookedRide.removeWhere((book) => book.bookingId == id);
       // allBookedRide.refresh();
       log(response.toString());
     } catch (e) {

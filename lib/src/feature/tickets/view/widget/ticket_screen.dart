@@ -3,6 +3,7 @@ import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/core/utils/app_button.dart';
 import 'package:drive_app/src/feature/rides/controller/user_rides_controller.dart';
+import 'package:drive_app/src/feature/rides/model/book_model.dart';
 import 'package:drive_app/src/feature/rides/model/rides_model.dart';
 import 'package:drive_app/src/feature/rides/view/riders_text.dart';
 import 'package:drive_app/src/feature/tickets/view/widget/ticket_text.dart';
@@ -55,15 +56,22 @@ class _TicketScreenState extends State<TicketScreen> {
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                          itemCount: controller.allBookedRide.first.ride.length,
+                          itemCount: controller.allBookedRide.length,
                           separatorBuilder: (BuildContext context, int index) {
                             return 20.0.kH;
                           },
                           itemBuilder: (BuildContext context, int index) {
-                            final ride =
-                                controller.allBookedRide.first.ride[index];
+                            final ride = controller.allBookedRide[index].ride
+                                .firstWhere((ride) =>
+                                    ride.id ==
+                                    controller.allBookedRide[index].rideId);
                             return _buildTripContainer(
-                                ride, index, context, controller, "fromList");
+                                ride,
+                                index,
+                                controller.allBookedRide[index],
+                                context,
+                                controller,
+                                "fromList");
                           },
                         ),
             ),
@@ -74,7 +82,7 @@ class _TicketScreenState extends State<TicketScreen> {
     );
   }
 
-  Container _buildTripContainer(RidesModel ride, int index,
+  Container _buildTripContainer(RidesModel ride, int index, BookingModel book,
       BuildContext context, UserRidesController controller, fromList) {
     RxBool isLoadingStatus = false.obs;
     return Container(
@@ -97,7 +105,7 @@ class _TicketScreenState extends State<TicketScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RidersText.mainText(ride?.name ?? "Loading..."),
+                  RidersText.mainText(book.busDriverName ?? "Loading..."),
                   Row(
                     children: [
                       Icon(
@@ -158,7 +166,7 @@ class _TicketScreenState extends State<TicketScreen> {
                     onTap: () {
                       controller.deleteBooking(
                         isLoadingStatus,
-                        ride.rideId!,
+                        book.bookingId,
                       );
                     },
                     title: "cancel".tr,

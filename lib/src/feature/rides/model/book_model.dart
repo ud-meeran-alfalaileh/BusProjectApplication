@@ -33,32 +33,32 @@ class BookingModel {
   final List<RidesModel> ride;
   String rideStatus;
   final int busDriverId;
+  final int rideId;
   final String busDriverName;
   final bool isRated;
-  final UserModel students;
-
+ 
   BookingModel({
     required this.bookingId,
     required this.ride,
     required this.studentId,
+    required this.rideId,
     required this.rideStatus,
     required this.busDriverId,
     required this.busDriverName,
     required this.isRated,
-    required this.students,
-  });
+   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
     return BookingModel(
       bookingId: json['bookingId'],
       studentId: json['studentId'],
+      rideId: json['rideId'],
       ride: RidesModel.fromJsonListfromJsonBooking(json['rides']),
       rideStatus: json['rideStatus'],
       busDriverId: json['busDriverId'],
       busDriverName: json['busDriverName'],
       isRated: json['isRated'],
-      students: UserModel.fromJson(json['students']),
-    );
+     );
   }
 
   static List<BookingModel> fromJsonList(List<dynamic> jsonList) {
