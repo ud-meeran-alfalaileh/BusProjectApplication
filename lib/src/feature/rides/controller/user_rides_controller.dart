@@ -11,6 +11,7 @@ import 'package:drive_app/src/feature/nav_bar/view/main/navbar_page.dart';
 import 'package:drive_app/src/feature/profile/model/admin_profile_model.dart';
 import 'package:drive_app/src/feature/rides/model/book_model.dart';
 import 'package:drive_app/src/feature/rides/model/rides_model.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserRidesController extends GetxController {
@@ -26,6 +27,7 @@ class UserRidesController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isLoadingTickert = false.obs;
   //studen
+  TextEditingController message = TextEditingController();
   RxDouble userRating = 0.0.obs;
   RxList<BookingModel> allBookedRide = <BookingModel>[].obs;
   RxList<BookModel> booking = <BookModel>[].obs;
@@ -185,7 +187,6 @@ class UserRidesController extends GetxController {
     allBookedRide.clear();
     await user.loadId();
     isLoadingTickert.value = true;
-    final allRides = await getAllRides();
 
     try {
       final response = await dioConsumer.get(
@@ -215,5 +216,22 @@ class UserRidesController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<void> postReview(bookingId) async {
+    try {
+      var body = ({
+        "bookingId": bookingId,
+        "ratingValue": userRating.value,
+      });
+      log(body.toString());
+
+      final response = await dioConsumer.post(EndPoints.review, body: body);
+      log(response.data.toString());
+      if (response.statusCode == StatusCode.ok) {
+        Get.back();
+      }
+      // ignore: empty_catches
+    } catch (e) {}
   }
 }

@@ -1,6 +1,6 @@
 class RidesModel {
   final int id;
-    int? rideId;
+  int? rideId;
   final String startTime;
   final String endTime;
   final String startDate;
@@ -12,11 +12,12 @@ class RidesModel {
   final String gender;
   final int adminId;
   final int busNumber;
+  final int? bookingCount;
   final String name;
   final String email;
 
   RidesModel({
-      this.rideId,
+    this.rideId,
     required this.id,
     required this.startTime,
     required this.endTime,
@@ -29,6 +30,7 @@ class RidesModel {
     required this.gender,
     required this.adminId,
     required this.busNumber,
+      this.bookingCount,
     required this.name,
     required this.email,
   });
@@ -48,6 +50,7 @@ class RidesModel {
       gender: json['gender'] ?? '',
       adminId: json['adminId'] ?? 0,
       busNumber: json['busNumber'] ?? 0,
+      bookingCount: json['bookingCount'] ?? 0,
       name: json['name'] ?? '',
       email: json['email'] ?? '',
     );
@@ -67,6 +70,7 @@ class RidesModel {
       gender: json['gender'] ?? '',
       adminId: json['adminId'] ?? 0,
       busNumber: json['busNumber'] ?? 0,
+      bookingCount: json['bookingCount'] ?? 0,
       name: json['name'] ?? '',
       email: json['email'] ?? '',
     );
@@ -75,6 +79,7 @@ class RidesModel {
   static List<RidesModel> fromJsonList(List<dynamic> jsonList) {
     return jsonList.map((json) => RidesModel.fromJson(json)).toList();
   }
+
   static List<RidesModel> fromJsonListfromJsonBooking(List<dynamic> jsonList) {
     return jsonList.map((json) => RidesModel.fromJsonBooking(json)).toList();
   }

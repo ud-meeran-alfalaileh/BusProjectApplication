@@ -2,6 +2,8 @@ import 'package:drive_app/src/config/sizes/size_box_extension.dart';
 import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/core/utils/app_button.dart';
+import 'package:drive_app/src/feature/login/model/login_form_model.dart';
+import 'package:drive_app/src/feature/login/view/widgte/collection/auth_form_widget.dart';
 import 'package:drive_app/src/feature/rides/controller/user_rides_controller.dart';
 import 'package:drive_app/src/feature/rides/model/book_model.dart';
 import 'package:drive_app/src/feature/rides/model/rides_model.dart';
@@ -185,7 +187,7 @@ class _TicketScreenState extends State<TicketScreen> {
                     color: Colors.green),
               ],
             ),
-          if (ride.status == "Completed")
+          if (ride.status == "Completed" && !book.isRated)
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -193,7 +195,7 @@ class _TicketScreenState extends State<TicketScreen> {
                     onTap: () {
                       showDraggableBottomSheet(
                         context,
-                        ride,
+                        controller.allBookedRide[index],
                         controller,
                       );
                     },
@@ -231,7 +233,7 @@ class _TicketScreenState extends State<TicketScreen> {
 }
 
 void showDraggableBottomSheet(
-    BuildContext context, RidesModel book, UserRidesController controller) {
+    BuildContext context, BookingModel book, UserRidesController controller) {
   showModalBottomSheet(
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
@@ -251,17 +253,17 @@ void showDraggableBottomSheet(
 }
 
 Container pendingReviewContainer(
-    BuildContext context, RidesModel book, UserRidesController controller) {
+    BuildContext context, BookingModel book, UserRidesController controller) {
   return Container(
     padding: const EdgeInsets.all(20),
-    width: context.screenWidth * .84,
+    // width: context.screenWidth * .84,
     decoration: BoxDecoration(
       color: AppTheme.lightAppColors.background,
       borderRadius: BorderRadius.circular(20),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         // Displaying the service name and details
 
@@ -285,16 +287,24 @@ Container pendingReviewContainer(
         ),
         const SizedBox(height: 20),
 
-        Row(
-          children: [
-            Text(
-              "Write a review message:".tr,
-              style: const TextStyle(fontFamily: "Inter", fontSize: 16),
-            ),
-          ],
+        Text(
+          "Write a review message:".tr,
+          style: const TextStyle(fontFamily: "Inter", fontSize: 16),
         ),
 
-        // Submit Button
+        AuthForm(
+            minLine: 6,
+            maxLine: 7,
+            hintSize: 20,
+            formModel: FormModel(
+                controller: controller.message,
+                enableText: false,
+                hintText: "Message".tr,
+                invisible: false,
+                validator: null,
+                type: TextInputType.text,
+                inputFormat: [],
+                onTap: null)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -310,17 +320,7 @@ Container pendingReviewContainer(
             appButton(
               width: context.screenWidth * .25,
               onTap: () {
-                // doctorController.postReview(
-                //     review.reviewId,
-                //     'Done',
-                //     PostNotificationModel(
-                //         title: "title",
-                //         message: "message",
-                //         imageURL: "imageURL",
-                //         externalIds: "externalIds",
-                //         route: ''),
-                //     review.vendorId,
-                //     review.bookingId);
+                controller.postReview(book.bookingId);
               },
               title: 'Submit'.tr,
             ),

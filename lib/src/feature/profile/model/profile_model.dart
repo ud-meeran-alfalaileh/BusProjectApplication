@@ -18,9 +18,18 @@ class UserModel {
     return UserModel(
       userId: json['userId'],
       email: json['email'],
-      firstName: json['firstName']??'',
-      sectName: json['sectName']??'',
+      firstName: json['firstName'] ?? '',
+      sectName: json['sectName'] ?? '',
       password: json['password'],
+    );
+  }
+  factory UserModel.fromJsonRating(Map<String, dynamic> json) {
+    return UserModel(
+      userId: json['id'],
+      email: json['email'],
+      firstName: json['name'] ?? '',
+      sectName: json['name'] ?? '',
+      password: json['name'],
     );
   }
 

@@ -6,6 +6,8 @@ class EndPoints {
   static const String mobileAPI = '${baseUrl}mobile/';
   static const String login = '${baseUrl}User/loginForUsers';
   static const String adminProfile = '${baseUrl}Admin/';
+  static const String review = '${baseUrl}Rating/create';
+  static const String allReview = '${baseUrl}Rating/All';
   static const String allRides = '${baseUrl}Ride/all';
   static const String allBooking = '${baseUrl}Booking/all';
   static const String booking = '${baseUrl}Booking/';

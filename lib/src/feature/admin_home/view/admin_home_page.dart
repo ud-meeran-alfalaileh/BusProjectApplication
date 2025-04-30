@@ -4,6 +4,7 @@ import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/feature/admin_statistics/view/admin_statistics_page.dart';
 import 'package:drive_app/src/feature/profile/contorller/admin_profile_controller.dart';
 import 'package:drive_app/src/feature/profile/view/admin_profile_page.dart';
+import 'package:drive_app/src/feature/rating/view/rates_page.dart';
 import 'package:drive_app/src/feature/rides/view/add_rides_page.dart';
 import 'package:drive_app/src/feature/rides/view/all_rides_screen.dart';
 import 'package:flutter/material.dart';
@@ -51,12 +52,15 @@ class AdminHomePage extends StatelessWidget {
                       ),
                       20.0.kH,
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           _buildHomeButton(context, () {
                             Get.to(() => AdminProfilePage());
                           }, "Profile".tr, "assets/image/user.png",
                               Colors.blueAccent),
+                          _buildHomeButton(context, () {
+                            Get.to(() => RatesPage());
+                          }, "Rating".tr, "assets/image/rate.png", null),
                         ],
                       )
                     ],

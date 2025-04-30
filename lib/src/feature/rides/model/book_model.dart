@@ -1,4 +1,5 @@
 import 'package:drive_app/src/feature/profile/model/profile_model.dart';
+import 'package:drive_app/src/feature/rating/model/rating_model.dart';
 import 'package:drive_app/src/feature/rides/model/rides_model.dart';
 
 class BookModel {
@@ -36,7 +37,9 @@ class BookingModel {
   final int rideId;
   final String busDriverName;
   final bool isRated;
- 
+  final List<RatingModel> ratings;
+  final UserModel students;
+
   BookingModel({
     required this.bookingId,
     required this.ride,
@@ -45,20 +48,24 @@ class BookingModel {
     required this.rideStatus,
     required this.busDriverId,
     required this.busDriverName,
+    required this.ratings,
+    required this.students,
     required this.isRated,
-   });
+  });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
     return BookingModel(
       bookingId: json['bookingId'],
       studentId: json['studentId'],
+      students: UserModel.fromJsonRating(json['students']),
       rideId: json['rideId'],
       ride: RidesModel.fromJsonListfromJsonBooking(json['rides']),
       rideStatus: json['rideStatus'],
       busDriverId: json['busDriverId'],
       busDriverName: json['busDriverName'],
       isRated: json['isRated'],
-     );
+      ratings: RatingModel.fromJsonList(json['ratings']),
+    );
   }
 
   static List<BookingModel> fromJsonList(List<dynamic> jsonList) {

@@ -14,6 +14,7 @@ class AdminStatisticsController extends GetxController {
   final DioConsumer dioConsumer = sl<DioConsumer>();
   User user = User();
   RxList<RidesModel> allRides = <RidesModel>[].obs;
+  RxList<RidesModel> mostBooked = <RidesModel>[].obs;
   RxInt accptedDriverRides = 0.obs;
   RxInt startedRides = 0.obs;
   RxInt completedRides = 0.obs;
@@ -23,6 +24,7 @@ class AdminStatisticsController extends GetxController {
   @override
   Future<void> onInit() async {
     await getAllRides();
+    await mostBookedRides();
     super.onInit();
   }
 
@@ -50,6 +52,22 @@ class AdminStatisticsController extends GetxController {
 
         rejectedRides.value =
             allRides.where((ride) => ride.status == "Rejected").toList().length;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<void> mostBookedRides() async {
+    try {
+      await user.loadId();
+      final response = await dioConsumer
+          .get("https://166.1.227.210:7014/api/MostBookedRides");
+
+      if (response.statusCode == StatusCode.ok) {
+        final responseData = jsonDecode(response.data);
+        mostBooked.value =
+            RidesModel.fromJsonList(responseData); // Assign rides first
       }
     } catch (e) {
       log(e.toString());

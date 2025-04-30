@@ -7,11 +7,17 @@ class AuthForm extends StatefulWidget {
   AuthForm({
     required this.formModel,
     this.textAlign,
+    this.maxLine,
+    this.hintSize,
+    this.minLine,
     this.ontap,
     super.key,
   });
 
   FormModel formModel;
+  int? maxLine;
+  double? hintSize;
+  int? minLine;
   VoidCallback? ontap;
   TextAlign? textAlign;
 
@@ -23,6 +29,8 @@ class _AuthFormState extends State<AuthForm> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        minLines: widget.minLine ?? 1,
+        maxLines: widget.maxLine ?? 1,
         onTap: widget.ontap,
         onChanged: widget.formModel.onChange,
         textInputAction: TextInputAction.done,
@@ -39,7 +47,7 @@ class _AuthFormState extends State<AuthForm> {
         textAlign: TextAlign.start, // Center align the text and hint
 
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 20),
+          contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           // prefixIcon: Icon(widget.formModel.icon,
           //     color: AppTheme.lightAppColors.subTextcolor),
           filled: true,
@@ -63,6 +71,7 @@ class _AuthFormState extends State<AuthForm> {
           hintText: widget.formModel.hintText,
           hintStyle: TextStyle(
             fontFamily: "kanti",
+            fontSize: widget.hintSize ?? 14,
             fontWeight: FontWeight.w200,
             color: AppTheme.lightAppColors.subTextcolor,
           ),
