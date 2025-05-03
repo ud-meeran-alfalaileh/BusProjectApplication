@@ -63,8 +63,8 @@ class _DriverAllRidesState extends State<DriverAllRides> {
   }
 }
 
-Container buildTripContainer(RidesModel ride,
-    RidesController controller, int index, BuildContext context) {
+Container buildTripContainer(RidesModel ride, RidesController controller,
+    int index, BuildContext context) {
   RxBool isLoadingStatus = false.obs;
 
   return Container(
@@ -146,8 +146,8 @@ Container buildTripContainer(RidesModel ride,
                     children: [
                       statusButton(
                           onTap: () {
-                            controller.changeStatus(ride.rideId,
-                                isLoadingStatus, index, "Accpted");
+                            controller.changeStatus(
+                                ride.rideId, isLoadingStatus, index, "Accpted");
                           },
                           title: "accept".tr,
                           color: AppTheme.lightAppColors.primary),

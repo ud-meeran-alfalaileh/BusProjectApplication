@@ -144,8 +144,8 @@ Container buildTripContainer(RidesModel ride, DriverRidesController controller,
                   ride.status == "Accpted"
                       ? statusButton(
                           onTap: () {
-                            controller.changeStatus(
-                                ride.rideId, isLoadingStatus, index, "In Progress");
+                            controller.changeStatus(ride.rideId,
+                                isLoadingStatus, index, "In Progress");
                           },
                           title: "Started".tr,
                           color: AppTheme.lightAppColors.primary)

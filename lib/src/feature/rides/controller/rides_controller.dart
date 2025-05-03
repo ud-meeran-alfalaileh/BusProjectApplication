@@ -48,12 +48,6 @@ class RidesController extends GetxController {
         rides.value =
             RidesModel.fromJsonList(responseData); // Assign rides first
 
-        // for (var i = 0; i < rides.length; i++) {
-        //   final driver = await getDriver(rides[i].busDriverId);
-        //   if (driver != null) {
-        //     rides[i] = rides[i].copyWith(driver: driver); // Ensure immutability
-        //   }
-        // }
       }
     } catch (e) {
       log(e.toString());

@@ -110,6 +110,7 @@ class LocalStrings extends Translations {
           ///
           'No Rides for today': 'No Rides for today',
           'No Rides for you': 'No Rides for you',
+          'No Comment For this ride': 'No Comment For this ride',
 
           ///
           'Sign In as Admin': 'Sign In as Admin',
@@ -124,6 +125,7 @@ class LocalStrings extends Translations {
           "Booking Count": "Booking Count",
         },
         'ar_JO': {
+          'No Comment For this ride': "لا تعليق على هذه الرحلة",
           "Booking Count": "عدد مرات الحجز",
           "All Rating": " جميع التقييمات",
           "Most Booked Rides": "الرحلات الأكثر حجزًا",

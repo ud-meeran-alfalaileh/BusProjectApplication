@@ -191,7 +191,6 @@ class UserRidesController extends GetxController {
     try {
       final response = await dioConsumer.get(
           "https://166.1.227.210:7014/api/Booking/${user.userId.value}/booking/Details");
-      log(response.data);
       if (response.statusCode == StatusCode.ok) {
         final responseData = jsonDecode(response.data);
         allBookedRide.value = BookingModel.fromJsonList(responseData);

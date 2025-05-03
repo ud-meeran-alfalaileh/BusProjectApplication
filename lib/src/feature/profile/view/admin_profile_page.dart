@@ -1,3 +1,5 @@
+import 'package:drive_app/src/config/localization/lang_list.dart';
+import 'package:drive_app/src/config/localization/locale_constant.dart';
 import 'package:drive_app/src/config/sizes/size_box_extension.dart';
 import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
@@ -14,6 +16,8 @@ class AdminProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localController = Get.put(LocalizationController());
+
     final controller = Get.put(AdminProfileController());
     User user = User();
     return Scaffold(
@@ -29,6 +33,52 @@ class AdminProfilePage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  backgroundColor:
+                                      AppTheme.lightAppColors.background,
+                                  title: Text("Select Language".tr),
+                                  content: Text(
+                                      "Choose a language for your Application."
+                                          .tr),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        localController.updateLanguage(
+                                            Languages.locale[1]['locale']);
+
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        "Arabic".tr,
+                                        style: TextStyle(
+                                            color:
+                                                AppTheme.lightAppColors.black),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        localController.updateLanguage(
+                                            Languages.locale[0]['locale']);
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        "English".tr,
+                                        style: TextStyle(
+                                            color:
+                                                AppTheme.lightAppColors.black),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          icon: Icon(Icons.language_sharp)),
                       GestureDetector(
                           onTap: () {
                             user.clearId();

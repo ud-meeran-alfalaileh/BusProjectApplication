@@ -10,6 +10,7 @@ import 'package:drive_app/src/core/user.dart';
 import 'package:drive_app/src/feature/profile/model/admin_profile_model.dart';
 import 'package:drive_app/src/feature/rides/model/rides_model.dart';
 import 'package:get/get.dart';
+import 'package:http/io_client.dart';
 
 class DriverRidesController extends GetxController {
   HttpClient getHttpClient() {
@@ -53,36 +54,36 @@ class DriverRidesController extends GetxController {
   }
 
   Future<void> changeStatus(id, isLoadingStatus, index, status) async {
-    // try {
-    //   isLoadingStatus.value = true;
+    try {
+      isLoadingStatus.value = true;
 
-    //   var body = jsonEncode("$status"); // <-- This should probably be JSON
+      var body = jsonEncode("$status"); // <-- This should probably be JSON
 
-    //   final ioClient = IOClient(getHttpClient());
-    //   final response = await ioClient.put(
-    //     Uri.parse("${EndPoints.rides}$id/UpdateRideStatus"),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Accept': 'application/json',
-    //     },
-    //     body: body,
-    //   );
+      final ioClient = IOClient(getHttpClient());
+      final response = await ioClient.put(
+        Uri.parse("${EndPoints.rides}$id/UpdateRideStatus"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: body,
+      );
 
-    //   if (response.statusCode == StatusCode.ok) {
-    //     final responseData = jsonDecode(response.body);
-    //     log(responseData.toString());
-    //   } else {
-    //     isLoadingStatus.value = false;
-    //   }
+      if (response.statusCode == StatusCode.ok) {
+        final responseData = jsonDecode(response.body);
+        log(responseData.toString());
+      } else {
+        isLoadingStatus.value = false;
+      }
 
-    //   accptedDriverRides[index].status = status;
-    //   accptedDriverRides.refresh();
-    // } catch (e) {
-    //   log(e.toString());
-    //   isLoadingStatus.value = false;
-    // } finally {
-    //   isLoadingStatus.value = false;
-    // }
+      accptedDriverRides[index].status = status;
+      accptedDriverRides.refresh();
+    } catch (e) {
+      log(e.toString());
+      isLoadingStatus.value = false;
+    } finally {
+      isLoadingStatus.value = false;
+    }
   }
 
   Future<void> getRideForDrive() async {

@@ -2,8 +2,7 @@ import 'package:drive_app/src/config/sizes/size_box_extension.dart';
 import 'package:drive_app/src/config/sizes/sizes.dart';
 import 'package:drive_app/src/config/theme/theme.dart';
 import 'package:drive_app/src/feature/rating/controller/rating_controller.dart';
-import 'package:drive_app/src/feature/rides/model/book_model.dart';
-import 'package:drive_app/src/feature/rides/model/rides_model.dart';
+import 'package:drive_app/src/feature/rating/model/rating_model.dart';
 import 'package:drive_app/src/feature/rides/view/riders_text.dart';
 import 'package:drive_app/src/feature/tickets/view/widget/ticket_text.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ class RatesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(RatingController())..getUserBooking();
+    final controller = Get.put(RatingController())..getAllRating();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -31,16 +30,13 @@ class RatesPage extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  itemCount: controller.allBookedRide.length,
+                  itemCount: controller.ratingList.length,
                   separatorBuilder: (BuildContext context, int index) {
                     return 20.0.kH;
                   },
                   itemBuilder: (BuildContext context, int index) {
-                    final ride = controller.allBookedRide[index].ride
-                        .firstWhere((ride) =>
-                            ride.id == controller.allBookedRide[index].rideId);
-                    return _buildTripContainer(ride, index,
-                        controller.allBookedRide[index], context, "fromList");
+                    return _buildTripContainer(
+                        controller.ratingList[index], index, context);
                   },
                 ),
                 40.0.kH,
@@ -52,8 +48,8 @@ class RatesPage extends StatelessWidget {
     );
   }
 
-  Container _buildTripContainer(RidesModel ride, int index, BookingModel book,
-      BuildContext context, fromList) {
+  Container _buildTripContainer(
+      RatingModel rating, int index, BuildContext context) {
     RxBool isLoadingStatus = false.obs;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -75,7 +71,7 @@ class RatesPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RidersText.mainText(book.busDriverName ?? "Loading..."),
+                  RidersText.mainText(rating.busDriverNamee ?? "Loading..."),
                   Row(
                     children: [
                       Icon(
@@ -85,7 +81,7 @@ class RatesPage extends StatelessWidget {
                         size: 17,
                       ),
                       5.0.kW,
-                      TicketText.secText(ride.startDate)
+                      TicketText.secText(rating.startDate)
                     ],
                   )
                 ],
@@ -98,8 +94,8 @@ class RatesPage extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  TicketText.timeText(ride.source),
-                  TicketText.ttText(ride.startTime),
+                  TicketText.timeText(rating.source),
+                  TicketText.ttText(rating.startTime),
                 ],
               ),
               Text(
@@ -110,7 +106,7 @@ class RatesPage extends StatelessWidget {
                     color:
                         AppTheme.lightAppColors.black.withValues(alpha: 0.3)),
               ),
-              TicketText.durationText(ride.startTime),
+              TicketText.durationText(rating.startTime),
               Text(
                 'To'.tr,
                 style: TextStyle(
@@ -121,67 +117,64 @@ class RatesPage extends StatelessWidget {
               ),
               Column(
                 children: [
-                  TicketText.timeText(ride.destination),
-                  TicketText.ttText(ride.endTime),
+                  TicketText.timeText(rating.destination),
+                  TicketText.ttText(rating.endTime),
                 ],
               ),
             ],
           ),
           10.0.kH,
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: book.ratings.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return 10.0.kH;
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: AppTheme.lightAppColors.background,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: AssetImage('assets/image/user.png'),
-                        ),
-                        Center(
-                          child: RatingBar.builder(
-                            initialRating: book.ratings[index].ratingValue,
-                            minRating: 1,
-                            updateOnDrag: false,
-                            direction: Axis.horizontal,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            itemPadding: EdgeInsets.symmetric(
-                                horizontal: context.screenWidth * .002),
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: AppTheme.lightAppColors.secondaryColor,
-                            ),
-                            onRatingUpdate:
-                                (_) {}, // Still required, but will not trigger
-                            ignoreGestures: true, // ✅ Makes it non-interactive
-                          ),
-                        ),
-                      ],
-                    ),
-                    5.0.kH,
-                    Text(
-                      book.ratings[index].note,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
-                    )
-                  ],
-                ),
-              );
-            },
+          // ListView.separated(
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   shrinkWrap: true,
+          //   itemCount: r.ratings.length,
+          //   separatorBuilder: (BuildContext context, int index) {
+          //     return 10.0.kH;
+          //   },
+          //   itemBuilder: (BuildContext context, int index) {
+          //     return Container(
+          //       padding: EdgeInsets.all(10),
+          //       decoration: BoxDecoration(
+          //         color: AppTheme.lightAppColors.background,
+          //         borderRadius: BorderRadius.circular(5),
+          //       ),
+          //       child: Column(
+          //         children: [
+          //           Row(
+          //             children: [
+          //               CircleAvatar(
+          //                 backgroundColor: Colors.white,
+          //                 backgroundImage: AssetImage('assets/image/user.png'),
+          //               ),
+          Center(
+            child: RatingBar.builder(
+              initialRating: rating.ratingValue.toDouble(),
+              minRating: 1,
+              updateOnDrag: false,
+              direction: Axis.horizontal,
+              allowHalfRating: true,
+              itemCount: 5,
+              itemPadding:
+                  EdgeInsets.symmetric(horizontal: context.screenWidth * .002),
+              itemBuilder: (context, _) => Icon(
+                Icons.star,
+                color: AppTheme.lightAppColors.secondaryColor,
+              ),
+              onRatingUpdate: (_) {}, // Still required, but will not trigger
+              ignoreGestures: true, // ✅ Makes it non-interactive
+            ),
           ),
+
+          5.0.kH,
+          Text(
+            rating.note ?? 'No Comment For this ride'.tr,
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          )
+          //         ],
+          //       ),
+          //     );
+          //   },
+          // ),
         ],
       ),
     );

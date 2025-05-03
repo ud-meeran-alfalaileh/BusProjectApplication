@@ -55,6 +55,7 @@ class AdminLoginController extends GetxController {
         EndPoints.loginAdmin,
         body: body,
       );
+      log(response.data);
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.data);
 
